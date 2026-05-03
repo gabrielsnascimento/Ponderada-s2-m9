@@ -55,7 +55,7 @@ O diagrama foi desenvolvido seguindo a notação oficial do C4 Model proposta po
 - **PlantUML** com a biblioteca C4-PlantUML — versão recomendada por aderir à notação canônica do C4
 - **Mermaid** — versão alternativa com renderização nativa em GitHub, GitLab e Notion
 
-Os arquivos estão disponíveis em `/diagrams/sima-context.puml` e `/diagrams/sima-context.mmd`. Instruções de visualização no `README.md`.
+Os arquivos estão disponíveis em `/diagrams/c4.puml` e `/diagrams/c4.mmd`. Instruções de visualização no `README.md`.
 
 ### 4. Descrição dos Relacionamentos
 

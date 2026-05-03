@@ -5,7 +5,6 @@ Repositório da atividade de Arquitetura de Software — Diagrama de Contexto (C
 ## Estrutura
 
 ```
-.vscode/         # Configurações de extensões recomendadas
 diagrams/        # Diagramas como código (Mermaid e PlantUML)
 docs.md          # Documentação completa da atividade
 README.md        # Este arquivo
@@ -13,7 +12,7 @@ README.md        # Este arquivo
 
 ## Como visualizar os diagramas
 
-### Mermaid (`sima-context.mmd`)
+### Mermaid (`c4.mmd`)
 
 **Opção 1 — VS Code**
 Instale a extensão [Mermaid Preview](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid) e abra o arquivo `.mmd`.
@@ -26,7 +25,7 @@ O GitHub renderiza Mermaid nativamente em arquivos `.md`. Basta colar o código 
 
 ---
 
-### PlantUML (`sima-context.puml`)
+### PlantUML (`c4.puml`)
 
 **Opção 1 — VS Code**
 Instale a extensão [PlantUML](https://marketplace.visualstudio.com/items?itemName=jebbs.plantuml). As configurações do servidor já estão em `.vscode/settings.json`. Abra o arquivo `.puml` e pressione `Alt+D` para visualizar.
