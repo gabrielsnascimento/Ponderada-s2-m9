@@ -1,0 +1,29 @@
+graph TB
+operador(["Operador Agrícola - Pessoa - Monitora desempenho e saúde das máquinas via web ou mobile"])
+admin(["Administrador de Configuração - Pessoa - Gerencia perfis operacionais, firmware e configurações da frota"])
+gestor(["Gestor da Fazenda - Pessoa - Consulta KPIs e relatórios gerenciais"])
+manutencao(["Equipe de Manutenção - Pessoa - Recebe alertas e ordens de serviço"])
+sima["SIMA - Software System - Sistema Integrado de Monitoramento e Gestão de Configuração para Máquinas Agrícolas"]
+maquinas["Frota de Máquinas Agrícolas - Sistema Externo - Tratores, colheitadeiras e pulverizadores com sensores IoT"]
+middleware["Plataforma de Integração - Sistema Externo - Broker MQTT/AMQP que abstrai a comunicação com os dispositivos"]
+clima["Serviço de Dados Meteorológicos - Sistema Externo - API de previsão do tempo e alertas climáticos"]
+banco[("Banco de Dados Central - Sistema Externo - Repositório de telemetria, configurações e logs")]
+erp["Sistema ERP da Fazenda - Sistema Externo - Gestão financeira, insumos e custos"]
+idp["Provedor de Identidade - Sistema Externo - Autenticação SSO corporativa OAuth2 / OIDC"]
+operador -->|"Monitora máquinas e alertas em tempo real - HTTPS / WebSocket"| sima
+admin -->|"Define e publica configurações da frota - HTTPS"| sima
+gestor -->|"Consulta dashboards e relatórios - HTTPS"| sima
+sima -->|"Notifica alertas e ordens de serviço - Email / Push / SMS"| manutencao
+sima -->|"Publica comandos; assina tópicos de telemetria - MQTT / AMQP"| middleware
+middleware -->|"Encaminha comandos e coleta telemetria - MQTT-SN / 4G / LoRaWAN"| maquinas
+maquinas -->|"Envia telemetria: RPM, temperatura, GPS - MQTT-SN / 4G"| middleware
+sima -->|"Consulta previsão e alertas climáticos - HTTPS / REST"| clima
+sima -->|"Persiste e consulta dados operacionais - JDBC / SQL / TLS"| banco
+sima -->|"Sincroniza custos e ordens de serviço - REST / Webhook"| erp
+sima -->|"Autentica e autoriza usuários - OAuth2 / OIDC / SAML"| idp
+classDef pessoa fill:#08427B,stroke:#052E56,color:#ffffff,stroke-width:2px
+classDef sistema fill:#1168BD,stroke:#0B4884,color:#ffffff,stroke-width:3px
+classDef externo fill:#999999,stroke:#6B6B6B,color:#ffffff,stroke-width:2px
+class operador,admin,gestor,manutencao pessoa
+class sima sistema
+class maquinas,middleware,clima,banco,erp,idp externo

@@ -1,0 +1,39 @@
+@startuml SIMA_C4_Contexto
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title Diagrama de Contexto (C4 - Nível 1)\nSistema Integrado de Monitoramento e Gestão de Configuração para Máquinas Agrícolas
+
+' === ATORES ===
+Person(operador, "Operador Agrícola", "Monitora desempenho e saúde das máquinas em tempo real via web ou mobile.")
+Person(adminConfig, "Administrador de Configuração", "Gerencia perfis operacionais, firmware e configurações da frota.")
+Person(gestor, "Gestor da Fazenda", "Consulta KPIs, dashboards e relatórios gerenciais.")
+Person(manutencao, "Equipe de Manutenção", "Recebe alertas e ordens de serviço preventivas e corretivas.")
+
+' === SISTEMA CENTRAL ===
+System(sima, "SIMA — Sistema Integrado de Monitoramento e Gestão de Configuração", "Plataforma central que monitora a frota em tempo real, gerencia configurações dos dispositivos e integra dados externos para otimizar a operação agrícola.")
+
+' === SISTEMAS EXTERNOS ===
+System_Ext(maquinas, "Frota de Máquinas Agrícolas (IoT)", "Tratores, colheitadeiras, pulverizadores e plantadeiras com sensores embarcados.")
+System_Ext(middleware, "Plataforma de Integração / Middleware IoT", "Broker MQTT/AMQP que abstrai a comunicação bidirecional com os dispositivos no campo.")
+System_Ext(clima, "Serviço de Dados Meteorológicos", "API externa de previsão do tempo, alertas climáticos e dados históricos por região.")
+SystemDb_Ext(banco, "Banco de Dados Central", "Repositório corporativo de telemetria, configurações, usuários e logs de auditoria.")
+System_Ext(erp, "Sistema ERP da Fazenda", "Gestão financeira, insumos, estoque e custos operacionais.")
+System_Ext(idp, "Provedor de Identidade (IdP)", "Autenticação SSO corporativa — Keycloak, Azure AD ou Auth0.")
+
+' === RELACIONAMENTOS — ATORES ===
+Rel(operador, sima, "Monitora máquinas e visualiza alertas em tempo real", "HTTPS / WebSocket")
+Rel(adminConfig, sima, "Define e publica configurações da frota", "HTTPS")
+Rel(gestor, sima, "Consulta dashboards e relatórios gerenciais", "HTTPS")
+Rel(sima, manutencao, "Notifica alertas e abre ordens de serviço", "Email / Push / SMS")
+
+' === RELACIONAMENTOS — SISTEMAS EXTERNOS ===
+Rel(sima, middleware, "Publica comandos e configurações; assina tópicos de telemetria", "MQTT / AMQP")
+Rel(middleware, maquinas, "Encaminha comandos e coleta telemetria dos dispositivos", "MQTT-SN / 4G / LoRaWAN")
+Rel(maquinas, middleware, "Envia telemetria de sensores: RPM, temperatura, GPS, consumo", "MQTT-SN / 4G")
+Rel(sima, clima, "Consulta previsão e alertas meteorológicos por região", "HTTPS / REST")
+Rel(sima, banco, "Persiste e consulta dados operacionais, históricos e configurações", "JDBC / SQL / TLS")
+Rel(sima, erp, "Sincroniza dados de custos, insumos e ordens de serviço", "REST / Webhook")
+Rel(sima, idp, "Autentica e autoriza usuários", "OAuth2 / OIDC / SAML")
+
+SHOW_LEGEND()
+@enduml
